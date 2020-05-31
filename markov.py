@@ -1,10 +1,7 @@
 from collections import defaultdict
-import pandas as pd
 import random
 import re
 import string
-
-df = pd.read_csv('data/ArXiv.csv')
 
 def try_search(p, x):
     try:
@@ -12,7 +9,7 @@ def try_search(p, x):
     except TypeError:
         return False
 
-def set_var(keywords):
+def set_var(keywords, df):
     keywords_list = keywords.split(',')
     separator = '|'
     joined_keywords = separator.join(keywords_list)

@@ -4,14 +4,12 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-title_model = tf.keras.models.load_model('data/title.h5', compile=False)
-abstract_model = tf.keras.models.load_model('data/abstract.h5', compile=False)
 text = open('data/titles.txt', 'r').read()
 vocab = sorted(set(text))
 char2idx = {u:i for i, u in enumerate(vocab)}
 idx2char = np.array(vocab)
 
-def generate_title(start_string):
+def generate_title(start_string, model):
   # Number of characters to generate
   num_generate = 100
 
@@ -25,9 +23,9 @@ def generate_title(start_string):
   temperature = 0.5
 
   step = 0
-  title_model.reset_states()
+  model.reset_states()
   while step < num_generate:
-    predictions = title_model(input_eval)
+    predictions = model(input_eval)
     predictions = tf.squeeze(predictions, 0)
     predictions = predictions / temperature
     predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
@@ -40,7 +38,7 @@ def generate_title(start_string):
         step += 1
   return (start_string + ''.join(text_generated))
 
-def generate_abstract(start_string):
+def generate_abstract(start_string, model):
   # Number of characters to generate
   num_generate = 1000
 
@@ -54,9 +52,9 @@ def generate_abstract(start_string):
   temperature = 0.5
 
   step = 0
-  abstract_model.reset_states()
+  model.reset_states()
   while step < num_generate:
-    predictions = abstract_model(input_eval)
+    predictions = model(input_eval)
     predictions = tf.squeeze(predictions, 0)
     predictions = predictions / temperature
     predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
