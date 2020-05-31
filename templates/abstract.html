@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Abstract Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +11,35 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
-  <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h1>Random Abstract Generator</h1> 
-        <p>Generate random abstract based on keywords.</p> 
-      </div>
-      <form role="form" action = "/abstract" method='POST' action='/'>
-        <div class="form-group">
-          <input type="text" name="keyword" class="form-control" id="keyword-box" placeholder="Enter keyword(s) e.g. superconductor, graphene, conductivity" 
-            style="max-width: 500px;" autofocus required>
-        </div>
-        <button name="subject" type="submit" value="markov">Markov Chain</button>
-        <button name="subject" type="submit" value="rnn">RNN</button>
-      </form>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Random Abstract Generator</h1> 
+      <p>Generate random abstract based on keywords.</p> 
     </div>
+        <h2>{{ results['title'] }}</h2>
+        <p>{{ results['body'] }}</p>
+        <p>{{ results['keywords']}}</p>
+        <br>
+        {% for error in errors %}
+          <h4>{{ error }}</h4>
+        {% endfor %}
+        <ul>
+          <li><a href="/">Home</a></li>
+        </ul>
+  </div>
     <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  </body>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+</body>
+
 </html>

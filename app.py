@@ -4,32 +4,27 @@ from main import create_abstract
 # Create the application.
 app = Flask(__name__)
 
-# Global variables
 
-
-
-
-@app.route('/',methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/abstract',methods=['GET', 'POST'])
+def abstract():
     errors = []
     results = {}
     if request.method == "POST":
         # get url that the user has entered
         try:
             keyword = request.form['keyword']
-            if request.form['action'] == 'Markov Chain':
-                title, body = create_abstract(keyword)
-                results = {'title':title, 'body':body, 'keywords':'keywords: ' + keyword}
-            else: 
-                error_msg = "Method not yet implemented."
-                if error_msg not in errors:
-                    errors.append(error_msg)
+            method = request.form['subject']
+            title, body = create_abstract(keyword,method)
+            results = {'title':title, 'body':body, 'keywords':'keywords: ' + keyword}
         except IndexError:
             error_msg = "Unable to get keyword(s). Please make sure it's about physics/math/computer science/chemistry and try again."
             if error_msg not in errors:
                 errors.append(error_msg)
-    return render_template('index.html',errors=errors, results=results)
-
+    return render_template('abstract.html',errors=errors, results=results)
 
 if __name__ == '__main__':
     app.debug=True
