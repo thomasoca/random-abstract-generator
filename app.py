@@ -14,8 +14,8 @@ dataframe = None
 
 def load_all():
     global title_model, abstract_model, dataframe
-    title_model = tf.keras.models.load_model('data/title.h5', compile=False)
-    abstract_model = tf.keras.models.load_model('data/abstract.h5', compile=False)
+    title_model = tf.keras.models.load_model('data/title.h5')
+    abstract_model = tf.keras.models.load_model('data/abstract.h5')
     dataframe = pd.read_csv('data/ArXiv.csv')
 
 @app.route('/')
@@ -42,4 +42,4 @@ def abstract():
 if __name__ == '__main__':
     app.debug=True
     load_all()
-    app.run()
+    app.run(threaded=True)

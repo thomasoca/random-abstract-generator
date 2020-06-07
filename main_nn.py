@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
+
 text = open('data/titles.txt', 'r').read()
 vocab = sorted(set(text))
 char2idx = {u:i for i, u in enumerate(vocab)}
@@ -70,3 +71,5 @@ def generate_abstract(start_string, model):
   final_sentences.pop()
   final_string = '. '.join(final_sentences) + '.'
   return final_string
+
+
